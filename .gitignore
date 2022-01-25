@@ -1,0 +1,9 @@
+# VSCode
+.vscode/*
+!.vscode/extensions.json
+
+# Output
+dist/
+
+# Coverage
+cov_profile/
