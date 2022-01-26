@@ -20,8 +20,32 @@ router.get("/docs/:id", async (context) => {
   };
 });
 
-router.get("/page/:id/edit", async (context) => {
+router.get("/docs/:id/edit", async (context) => {
+  const pageId = context.params["id"];
+
   const ws = await context.upgrade();
+
+  ws.addEventListener("open", () => {
+    ws.send(JSON.stringify(
+      {
+        method: "INIT",
+        payload: {
+          latestCommit: { commitId: ulid() },
+          document: {
+            pageId: pageId,
+            lines: [
+              { lineId: nanoid(16), text: "こんにちは" },
+              { lineId: nanoid(16), text: "さようなら" },
+            ],
+          }
+        }
+      }
+    ))
+  })
+
+  ws.addEventListener("message", (event) => {
+    console.dir(event.data)
+  })
 });
 
 app.use(oakCors());
