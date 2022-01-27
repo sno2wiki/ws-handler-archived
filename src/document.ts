@@ -1,31 +1,30 @@
-import { ulid } from "ulid";
-import { nanoid } from "nanoid";
-import { DocumentType } from "./types.ts";
+import { DocumentType, InitCommitType } from "./types.ts";
+import { createCommitId, createLineId } from "./common.ts";
 
-export const documents: DocumentType[] = [
-  {
-    id: "doc_1",
-    commits: [
-      {
-        type: "INIT",
-        commitId: "01ARZ3NDEKTSV4RRFFQ69G5FAV",
-        previousCommitId: null,
-        userId: "01FTD78WNZ2NGCWNTPN59YDKEM"
-      },
-    ],
-    latestCommit: {
-      type: "INIT",
-      commitId: "01ARZ3NDEKTSV4RRFFQ69G5FAV",
-      previousCommitId: null,
-      userId: "01FTD78WNZ2NGCWNTPN59YDKEM"
-    },
+export const documents: DocumentType[] = [];
+
+export const getDocument = (documentId: string): DocumentType | null => {
+  return documents.find((document) => document.id === documentId) || null;
+};
+
+export const createDocument = (documentId: string, userId: string): DocumentType => {
+  const initCommit: InitCommitType = {
+    type: "INIT",
+    commitId: createCommitId(),
+    previousCommitId: null,
+    userId: userId,
+  };
+
+  const newDocument: DocumentType = {
+    id: documentId,
+    commits: [initCommit],
+    latestCommit: initCommit,
     lines: [
-      { lineId: nanoid(16), text: "こんにちは" },
-      { lineId: nanoid(16), text: "さようなら" },
+      { lineId: createLineId(), text: "" },
     ],
-  },
-];
+  };
 
-export const getDocument = async (id: string) => {
-  return documents.find((document) => document.id === id);
+  documents.push(newDocument);
+
+  return newDocument;
 };

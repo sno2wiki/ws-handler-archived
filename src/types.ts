@@ -7,7 +7,7 @@ export type InitCommitType = {
   previousCommitId: null;
 
   userId: string;
-}
+};
 type JoinCommitType = {
   type: "JOIN";
 

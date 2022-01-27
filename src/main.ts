@@ -2,24 +2,23 @@ import { bold, yellow } from "std/fmt/colors";
 import { oakCors } from "cors";
 import { Application, Router } from "oak";
 
-import { ulid } from "ulid";
-import { nanoid } from "nanoid";
-
-import { documents, getDocument } from "./document.ts";
+import { createDocument, getDocument } from "./document.ts";
 
 const app = new Application();
 const router = new Router();
 router.get("/docs/:id", async (context) => {
-  const pageId = context.params["id"];
+  const documentId = context.params["id"];
+  const document = await getDocument(documentId);
 
-  context.response.body = {
-    pageId: pageId,
-    latestCommitId: ulid(),
-    lines: [
-      { lineId: nanoid(16), text: "こんにちは" },
-      { lineId: nanoid(16), text: "さようなら" },
-    ],
-  };
+  context.response.status = 404;
+  context.response.body = document;
+});
+
+router.post("/docs/:id/create", async (context) => {
+  const documentId = context.params["id"];
+
+  const newDocument = await createDocument(documentId, "01FTD78WNZ2NGCWNTPN59YDKEM");
+  context.response.body = newDocument;
 });
 
 router.get("/docs/:id/edit", async (context) => {
