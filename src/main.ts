@@ -5,6 +5,8 @@ import { Application, Router } from "oak";
 import { ulid } from "ulid";
 import { nanoid } from "nanoid";
 
+import { documents, getDocument } from "./document.ts";
+
 const app = new Application();
 const router = new Router();
 router.get("/docs/:id", async (context) => {
@@ -21,31 +23,36 @@ router.get("/docs/:id", async (context) => {
 });
 
 router.get("/docs/:id/edit", async (context) => {
-  const pageId = context.params["id"];
+  const documentId = context.params["id"];
 
   const ws = await context.upgrade();
 
-  ws.addEventListener("open", () => {
-    ws.send(JSON.stringify(
-      {
-        method: "INIT",
-        payload: {
-          latestCommit: { commitId: ulid() },
-          document: {
-            pageId: pageId,
-            lines: [
-              { lineId: nanoid(16), text: "こんにちは" },
-              { lineId: nanoid(16), text: "さようなら" },
-            ],
-          }
-        }
-      }
-    ))
-  })
+  ws.addEventListener("open", async () => {
+    const storedDocument = await getDocument(documentId);
+    if (storedDocument) {
+      ws.send(JSON.stringify(
+        {
+          method: "INIT",
+          payload: {
+            documentId: storedDocument.id,
+            latestCommit: storedDocument.latestCommit,
+            lines: storedDocument.lines,
+          },
+        },
+      ));
+    } else {
+      ws.send(JSON.stringify(
+        {
+          method: "NOT_FOUND",
+          payload: null,
+        },
+      ));
+    }
+  });
 
   ws.addEventListener("message", (event) => {
-    console.dir(event.data)
-  })
+    console.dir(event.data);
+  });
 });
 
 app.use(oakCors());
