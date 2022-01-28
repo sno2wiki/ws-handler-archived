@@ -2,10 +2,13 @@ import { bold, yellow } from "std/fmt/colors";
 import { oakCors } from "cors";
 import { Application, Router } from "oak";
 
-import { createDocument, getDocument } from "./document.ts";
+import { createDocument, getDocument, isExistsDocument } from "./document.ts";
+import { connect } from "./sockets.ts";
 
 const app = new Application();
 const router = new Router();
+
+createDocument("eKfn8xhyQg68Pe1E", "01FTD78WNZ2NGCWNTPN59YDKEM");
 router.get("/docs/:id", async (context) => {
   const documentId = context.params["id"];
   const document = await getDocument(documentId);
@@ -24,34 +27,13 @@ router.post("/docs/:id/create", async (context) => {
 router.get("/docs/:id/edit", async (context) => {
   const documentId = context.params["id"];
 
+  if (!await isExistsDocument(documentId)) {
+    context.response.status = 404;
+    return;
+  }
+
   const ws = await context.upgrade();
-
-  ws.addEventListener("open", async () => {
-    const storedDocument = await getDocument(documentId);
-    if (storedDocument) {
-      ws.send(JSON.stringify(
-        {
-          method: "INIT",
-          payload: {
-            documentId: storedDocument.id,
-            latestCommit: storedDocument.latestCommit,
-            lines: storedDocument.lines,
-          },
-        },
-      ));
-    } else {
-      ws.send(JSON.stringify(
-        {
-          method: "NOT_FOUND",
-          payload: null,
-        },
-      ));
-    }
-  });
-
-  ws.addEventListener("message", (event) => {
-    console.dir(event.data);
-  });
+  connect(documentId, ws);
 });
 
 app.use(oakCors());

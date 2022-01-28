@@ -36,3 +36,9 @@ export type DocumentType = {
   latestCommit: CommitType;
   lines: LineType[];
 };
+
+export type ActualDocument = {
+  documentId: string;
+  latestCommit: CommitType;
+  lines: LineType[];
+};
