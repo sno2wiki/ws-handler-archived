@@ -4,7 +4,7 @@ export type Commit =
   | InsertCommit
   | { method: "DELETE"; payload: DeleteCommitPayload };
 
-import { InsertCommit, insertCommit, } from "./insert.ts";
+import { InsertCommit, insertCommit } from "./insert.ts";
 
 export const commitReducer = (lines: LineType[], commit: Commit): LineType[] => {
   switch (commit.method) {
