@@ -2,7 +2,7 @@ import { bold, yellow } from "std/fmt/colors";
 import { oakCors } from "cors";
 import { Application, Router } from "oak";
 
-import { createDocument, getDocument, isExistsDocument } from "./document.ts";
+import { findDocument, createDocument, parseDocument } from "./documents/mod.ts";
 import { connect } from "./sockets.ts";
 
 const app = new Application();
@@ -11,10 +11,13 @@ const router = new Router();
 createDocument("eKfn8xhyQg68Pe1E", "01FTD78WNZ2NGCWNTPN59YDKEM");
 router.get("/docs/:id", async (context) => {
   const documentId = context.params["id"];
-  const document = await getDocument(documentId);
+  const document = await findDocument(documentId);
 
-  context.response.status = 404;
-  context.response.body = document;
+  if (!document) {
+    context.response.status = 404;
+    return
+  }
+  context.response.body = parseDocument(document);
 });
 
 router.post("/docs/:id/create", async (context) => {
@@ -27,7 +30,7 @@ router.post("/docs/:id/create", async (context) => {
 router.get("/docs/:id/edit", async (context) => {
   const documentId = context.params["id"];
 
-  if (!await isExistsDocument(documentId)) {
+  if (!await findDocument(documentId)) {
     context.response.status = 404;
     return;
   }
