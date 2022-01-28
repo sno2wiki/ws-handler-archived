@@ -1,5 +1,5 @@
 import { assertEquals } from "std/testing/asserts";
-import { processCommits } from "./commits.ts";
+import { processCommits } from "./process_commits.ts";
 
 Deno.test("0コミットを処理する", () => {
   const actual = processCommits(

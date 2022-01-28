@@ -1,8 +1,6 @@
-import { LineType } from "./commits.ts";
+import { InsertCommitPayload, LineType } from "./types.ts";
 import { insertText } from "./insert.ts";
 
-export type InsertCommitPayload = { lineId: string; cursor: number; text: string };
-export type InsertCommitType = { method: "INSERT"; payload: InsertCommitPayload };
 export const insertCommit = (lines: LineType[], payload: InsertCommitPayload): LineType[] => {
   const index = lines.findIndex((line) => line.lineId === payload.lineId);
   if (index === -1) {

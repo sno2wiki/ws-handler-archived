@@ -1,10 +1,8 @@
-export type LineType = { lineId: string; nextLineId: string | null; text: string };
-export type Commit = InsertCommitType | DeleteCommitType;
+import { insertCommit } from "./insert_commit.ts";
+import { deleteCommit } from "./delete_commit.ts";
+import { EditCommit, LineType } from "./types.ts";
 
-import { insertCommit, InsertCommitType } from "./insert_commit.ts";
-import { deleteCommit, DeleteCommitType } from "./delete_commit.ts";
-
-export const processCommits = (lines: LineType[], commits: Commit[]) => {
+export const processCommits = (lines: LineType[], commits: EditCommit[]) => {
   for (const commit of commits) {
     switch (commit.method) {
       case "INSERT":
