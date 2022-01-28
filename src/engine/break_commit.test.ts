@@ -37,7 +37,6 @@ Deno.test("breakCommit #2", () => {
   );
 });
 
-
 Deno.test("breakCommit #3", () => {
   const actual = breakCommit(
     [

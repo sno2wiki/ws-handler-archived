@@ -161,7 +161,6 @@ Deno.test("複数のコミットを処理する #7", () => {
   );
 });
 
-
 Deno.test("複数のコミットを処理する #8", () => {
   const actual = processCommits(
     [
@@ -182,6 +181,48 @@ Deno.test("複数のコミットを処理する #8", () => {
       { lineId: "line_1", nextLineId: "newline", text: "AB" },
       { lineId: "newline", nextLineId: "line_2", text: "CD" },
       { lineId: "line_2", nextLineId: null, text: "" },
+    ],
+  );
+});
+
+Deno.test("複数のコミットを処理する #9", () => {
+  const actual = processCommits(
+    [
+      { lineId: "line_1", nextLineId: "line_2", text: "ABCD" },
+      { lineId: "line_2", nextLineId: null, text: "EFGH" },
+    ],
+    [
+      { "method": "DELETE", payload: { lineId: "line_2", cursor: 4 } },
+      { "method": "DELETE", payload: { lineId: "line_2", cursor: 3 } },
+      { "method": "DELETE", payload: { lineId: "line_2", cursor: 2 } },
+      { "method": "DELETE", payload: { lineId: "line_2", cursor: 1 } },
+      { "method": "FOLD", payload: { lineId: "line_2", } },
+    ],
+  );
+  assertEquals(
+    actual,
+    [
+      { lineId: "line_1", nextLineId: null, text: "ABCD" },
+    ],
+  );
+});
+
+Deno.test("複数のコミットを処理する #10", () => {
+  const actual = processCommits(
+    [
+      { lineId: "line_1", nextLineId: "line_2", text: "ABCD" },
+      { lineId: "line_2", nextLineId: null, text: "EFGH" },
+    ],
+    [
+      { "method": "DELETE", payload: { lineId: "line_2", cursor: 2 } },
+      { "method": "DELETE", payload: { lineId: "line_2", cursor: 1 } },
+      { "method": "FOLD", payload: { lineId: "line_2", } },
+    ],
+  );
+  assertEquals(
+    actual,
+    [
+      { lineId: "line_1", nextLineId: null, text: "ABCDGH" },
     ],
   );
 });
