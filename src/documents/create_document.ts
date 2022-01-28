@@ -1,7 +1,5 @@
 import { DocumentType, InitCommitType } from "../types.ts";
-
-import { createCommitId } from "../create_commit_id.ts";
-import { createLineId } from "../create_line_id.ts";
+import { createCommitId, createLineId } from "../common/mod.ts";
 
 import { documents } from "./storage.ts";
 
