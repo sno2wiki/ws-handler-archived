@@ -1,4 +1,4 @@
-import { assertEquals, } from "std/testing/asserts";
+import { assertEquals } from "std/testing/asserts";
 import { processCommits } from "./commits.ts";
 
 Deno.test("0コミットを処理する", () => {
@@ -57,8 +57,6 @@ Deno.test("複数のコミットを処理する #2", () => {
   );
 });
 
-
-
 Deno.test("複数のコミットを処理する #3", () => {
   const actual = processCommits(
     [
@@ -80,7 +78,6 @@ Deno.test("複数のコミットを処理する #3", () => {
   );
 });
 
-
 Deno.test("複数のコミットを処理する #4", () => {
   const actual = processCommits(
     [
@@ -88,19 +85,18 @@ Deno.test("複数のコミットを処理する #4", () => {
       { lineId: "line_2", nextLineId: null, text: "EFGH" },
     ],
     [
-      { "method": "DELETE", payload: { lineId: "line_1", cursor: 3, } },
-      { "method": "DELETE", payload: { lineId: "line_1", cursor: 2, } },
+      { "method": "DELETE", payload: { lineId: "line_1", cursor: 3 } },
+      { "method": "DELETE", payload: { lineId: "line_1", cursor: 2 } },
     ],
   );
   assertEquals(
     actual,
     [
       { lineId: "line_1", nextLineId: "line_2", text: "AD" },
-      { lineId: "line_2", nextLineId: null, text: "EFGH" }
+      { lineId: "line_2", nextLineId: null, text: "EFGH" },
     ],
   );
 });
-
 
 Deno.test("複数のコミットを処理する #5", () => {
   const actual = processCommits(
@@ -109,8 +105,8 @@ Deno.test("複数のコミットを処理する #5", () => {
       { lineId: "line_2", nextLineId: null, text: "EFGH" },
     ],
     [
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 3, } },
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 2, } },
+      { "method": "DELETE", payload: { lineId: "line_2", cursor: 3 } },
+      { "method": "DELETE", payload: { lineId: "line_2", cursor: 2 } },
     ],
   );
   assertEquals(
@@ -122,7 +118,6 @@ Deno.test("複数のコミットを処理する #5", () => {
   );
 });
 
-
 Deno.test("複数のコミットを処理する #6", () => {
   const actual = processCommits(
     [
@@ -130,9 +125,9 @@ Deno.test("複数のコミットを処理する #6", () => {
       { lineId: "line_2", nextLineId: null, text: "EFGH" },
     ],
     [
-      { "method": "DELETE", payload: { lineId: "line_1", cursor: 3, } },
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 3, } },
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 2, } },
+      { "method": "DELETE", payload: { lineId: "line_1", cursor: 3 } },
+      { "method": "DELETE", payload: { lineId: "line_2", cursor: 3 } },
+      { "method": "DELETE", payload: { lineId: "line_2", cursor: 2 } },
     ],
   );
   assertEquals(
@@ -153,8 +148,8 @@ Deno.test("複数のコミットを処理する #7", () => {
     [
       { "method": "INSERT", payload: { lineId: "line_1", cursor: 0, text: "A" } },
       { "method": "INSERT", payload: { lineId: "line_1", cursor: 1, text: "B" } },
-      { "method": "DELETE", payload: { lineId: "line_1", cursor: 1, } },
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 0, } },
+      { "method": "DELETE", payload: { lineId: "line_1", cursor: 1 } },
+      { "method": "DELETE", payload: { lineId: "line_1", cursor: 1 } },
     ],
   );
   assertEquals(
@@ -165,4 +160,3 @@ Deno.test("複数のコミットを処理する #7", () => {
     ],
   );
 });
-

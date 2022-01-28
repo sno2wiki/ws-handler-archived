@@ -1,8 +1,8 @@
 export type LineType = { lineId: string; nextLineId: string | null; text: string };
-export type Commit = InsertCommit | DeleteCommit;
+export type Commit = InsertCommitType | DeleteCommitType;
 
-import { InsertCommit, insertCommit } from "./insert.ts";
-import { DeleteCommit, deleteCommit } from "./delete.ts";
+import { insertCommit, InsertCommitType } from "./insert_commit.ts";
+import { deleteCommit, DeleteCommitType } from "./delete_commit.ts";
 
 export const commitReducer = (lines: LineType[], commit: Commit): LineType[] => {
   switch (commit.method) {
