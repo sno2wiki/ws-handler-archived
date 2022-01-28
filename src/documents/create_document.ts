@@ -4,7 +4,6 @@ import { createCommitId, createLineId } from "../common/mod.ts";
 import { documents } from "./storage.ts";
 
 export const createDocument = (documentId: string, userId: string): DocumentType => {
-
   const initCommit: InitCommitType = {
     type: "INIT",
     commitId: createCommitId(),
@@ -20,10 +19,10 @@ export const createDocument = (documentId: string, userId: string): DocumentType
   const newDocument: DocumentType = {
     id: documentId,
     lines: [firstLine],
-    firstLine: firstLine,
-    latestCommit: initCommit
+    firstLineId: firstLine.lineId,
+    latestCommitId: initCommit.commitId,
   };
 
-  documents.push(newDocument);
+  documents.set(documentId, newDocument);
   return newDocument;
 };

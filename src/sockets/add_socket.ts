@@ -13,9 +13,9 @@ export const addSocket = (documentId: string, ws: WebSocket) => {
     const data = JSON.parse(event.data);
 
     if (data.method === "PUSH_COMMITS") {
-      const dataPayload = data.payload;
+      const payload = data.payload;
 
-      const commits = dataPayload["commits"];
+      const commits = payload["commits"];
 
       const document = getDocument(documentId);
 

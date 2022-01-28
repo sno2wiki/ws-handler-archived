@@ -38,13 +38,13 @@ export type LineType = {
 export type DocumentType = {
   id: string;
   lines: LineType[];
-  firstLine: LineType
-  latestCommit: CommitUnion
+  firstLineId: LineType["lineId"];
+  latestCommitId: CommitUnion["commitId"];
 };
 
-export type ResponseDocumentLine = { lineId: string; text: string }
+export type ResponseDocumentLine = { lineId: string; text: string };
 export type ResponseDocument = {
   id: string;
   lines: ResponseDocumentLine[];
-  latestCommit: { commitId: string }
+  latestCommitId: DocumentType["latestCommitId"];
 };
