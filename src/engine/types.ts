@@ -9,4 +9,7 @@ export type DeleteCommitType = { method: "DELETE"; payload: DeleteCommitPayload 
 export type BreakCommitPayload = { lineId: string; cursor: number; newLineId: string };
 export type BreakCommitType = { method: "BREAK"; payload: BreakCommitPayload };
 
-export type EditCommit = InsertCommitType | DeleteCommitType | BreakCommitType;
+export type FoldCommitPayload = { lineId: string };
+export type FoldCommitType = { method: "FOLD"; payload: FoldCommitPayload };
+
+export type EditCommit = InsertCommitType | DeleteCommitType | BreakCommitType | FoldCommitType;
