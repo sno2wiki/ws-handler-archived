@@ -18,7 +18,6 @@ Deno.test("カーソル位置が1で文字を挿入", () => {
   assertEquals(actual, "ADBC");
 });
 
-
 Deno.test("カーソル位置が文字列長と同じで文字を挿入", () => {
   const actual = insert("ABC", 3, "D");
 
@@ -30,4 +29,3 @@ Deno.test("カーソル位置が文字列長以上の場合最後に挿入", () 
 
   assertEquals(actual, "ABCD");
 });
-
