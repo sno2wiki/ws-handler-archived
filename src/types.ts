@@ -38,9 +38,13 @@ export type LineType = {
 export type DocumentType = {
   id: string;
   lines: LineType[];
+  firstLine: LineType
+  latestCommit: CommitUnion
 };
 
+export type ResponseDocumentLine = { lineId: string; text: string }
 export type ResponseDocument = {
   id: string;
-  lines: LineType[];
+  lines: ResponseDocumentLine[];
+  latestCommit: { commitId: string }
 };

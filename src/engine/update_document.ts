@@ -11,5 +11,6 @@ export const updateDocument = (document: DocumentType, commits: CommitUnion[]): 
   return {
     ...document,
     lines,
+    latestCommit: sorted[sorted.length - 1]
   };
 };
