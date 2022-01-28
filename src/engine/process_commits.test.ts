@@ -196,7 +196,7 @@ Deno.test("複数のコミットを処理する #9", () => {
       { "method": "DELETE", payload: { lineId: "line_2", cursor: 3 } },
       { "method": "DELETE", payload: { lineId: "line_2", cursor: 2 } },
       { "method": "DELETE", payload: { lineId: "line_2", cursor: 1 } },
-      { "method": "FOLD", payload: { lineId: "line_2", } },
+      { "method": "FOLD", payload: { lineId: "line_2" } },
     ],
   );
   assertEquals(
@@ -216,7 +216,7 @@ Deno.test("複数のコミットを処理する #10", () => {
     [
       { "method": "DELETE", payload: { lineId: "line_2", cursor: 2 } },
       { "method": "DELETE", payload: { lineId: "line_2", cursor: 1 } },
-      { "method": "FOLD", payload: { lineId: "line_2", } },
+      { "method": "FOLD", payload: { lineId: "line_2" } },
     ],
   );
   assertEquals(

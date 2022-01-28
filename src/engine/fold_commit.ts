@@ -1,7 +1,7 @@
-import { BreakCommitPayload, FoldCommitPayload, InsertCommitPayload, LineType } from "./types.ts";
+import { BreakPayload, FoldPayload, InsertPayload, LineType } from "./types.ts";
 import { insertText } from "./insert.ts";
 
-export const foldCommit = (lines: LineType[], payload: FoldCommitPayload): LineType[] => {
+export const foldCommit = (lines: LineType[], payload: FoldPayload): LineType[] => {
   const beforeIndex = lines.findIndex((line) => line.nextLineId === payload.lineId);
   const targetIndex = lines.findIndex((line) => line.lineId === payload.lineId);
   if (beforeIndex === -1 || targetIndex === -1) {

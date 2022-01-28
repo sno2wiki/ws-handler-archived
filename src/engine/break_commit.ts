@@ -1,7 +1,7 @@
-import { BreakCommitPayload, InsertCommitPayload, LineType } from "./types.ts";
+import { BreakPayload, InsertPayload, LineType } from "./types.ts";
 import { insertText } from "./insert.ts";
 
-export const breakCommit = (lines: LineType[], payload: BreakCommitPayload): LineType[] => {
+export const breakCommit = (lines: LineType[], payload: BreakPayload): LineType[] => {
   const index = lines.findIndex((line) => line.lineId === payload.lineId);
   if (index === -1) {
     return lines;

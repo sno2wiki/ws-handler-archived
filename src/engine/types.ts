@@ -1,15 +1,34 @@
-export type LineType = { lineId: string; nextLineId: string | null; text: string };
+export type InsertPayload = { lineId: string; cursor: number; text: string };
+export type InsertData = { method: "INSERT"; payload: InsertPayload };
 
-export type InsertCommitPayload = { lineId: string; cursor: number; text: string };
-export type InsertCommitType = { method: "INSERT"; payload: InsertCommitPayload };
+export type DeletePayload = { lineId: string; cursor: number };
+export type DeleteData = { method: "DELETE"; payload: DeletePayload };
 
-export type DeleteCommitPayload = { lineId: string; cursor: number };
-export type DeleteCommitType = { method: "DELETE"; payload: DeleteCommitPayload };
+export type BreakPayload = { lineId: string; cursor: number; newLineId: string };
+export type BreakData = { method: "BREAK"; payload: BreakPayload };
 
-export type BreakCommitPayload = { lineId: string; cursor: number; newLineId: string };
-export type BreakCommitType = { method: "BREAK"; payload: BreakCommitPayload };
+export type FoldPayload = { lineId: string };
+export type FoldData = { method: "FOLD"; payload: FoldPayload };
 
-export type FoldCommitPayload = { lineId: string };
-export type FoldCommitType = { method: "FOLD"; payload: FoldCommitPayload };
+export type EditDataUnion =
+  | InsertData
+  | DeleteData
+  | BreakData
+  | FoldData;
 
-export type EditCommit = InsertCommitType | DeleteCommitType | BreakCommitType | FoldCommitType;
+export type EditCommitType = {
+  commitId: string;
+  previousCommitId: string;
+  type: "EDIT";
+  data: EditDataUnion;
+};
+export type CommitType = EditCommitType;
+export type LineType = {
+  lineId: string;
+  nextLineId: string | null;
+  text: string;
+};
+
+export type DocumentType = {
+  lines: LineType[];
+};
