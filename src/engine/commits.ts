@@ -1,4 +1,4 @@
-export type LineType = { lineId: string; nextLineId: string; text: string };
+export type LineType = { lineId: string; nextLineId: string | null; text: string };
 export type Commit = InsertCommit | DeleteCommit;
 
 import { InsertCommit, insertCommit } from "./insert.ts";
