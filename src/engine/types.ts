@@ -6,7 +6,7 @@ export type InsertCommitType = { method: "INSERT"; payload: InsertCommitPayload 
 export type DeleteCommitPayload = { lineId: string; cursor: number };
 export type DeleteCommitType = { method: "DELETE"; payload: DeleteCommitPayload };
 
-export type FoldCommitPayload = { lineId: string; cursor: number; newLineId: string };
-export type FoldCommitType = { method: "FOLD"; payload: FoldCommitPayload };
+export type BreakCommitPayload = { lineId: string; cursor: number; newLineId: string };
+export type BreakCommitType = { method: "BREAK"; payload: BreakCommitPayload };
 
-export type EditCommit = InsertCommitType | DeleteCommitType | FoldCommitType;
+export type EditCommit = InsertCommitType | DeleteCommitType | BreakCommitType;

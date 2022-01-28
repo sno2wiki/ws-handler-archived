@@ -160,3 +160,28 @@ Deno.test("複数のコミットを処理する #7", () => {
     ],
   );
 });
+
+
+Deno.test("複数のコミットを処理する #8", () => {
+  const actual = processCommits(
+    [
+      { lineId: "line_1", nextLineId: "line_2", text: "" },
+      { lineId: "line_2", nextLineId: null, text: "" },
+    ],
+    [
+      { "method": "INSERT", payload: { lineId: "line_1", cursor: 0, text: "A" } },
+      { "method": "INSERT", payload: { lineId: "line_1", cursor: 1, text: "B" } },
+      { "method": "INSERT", payload: { lineId: "line_1", cursor: 2, text: "C" } },
+      { "method": "INSERT", payload: { lineId: "line_1", cursor: 3, text: "D" } },
+      { "method": "BREAK", payload: { lineId: "line_1", cursor: 2, newLineId: "newline" } },
+    ],
+  );
+  assertEquals(
+    actual,
+    [
+      { lineId: "line_1", nextLineId: "newline", text: "AB" },
+      { lineId: "newline", nextLineId: "line_2", text: "CD" },
+      { lineId: "line_2", nextLineId: null, text: "" },
+    ],
+  );
+});
