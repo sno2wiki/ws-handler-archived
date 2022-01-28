@@ -1,44 +1,46 @@
-export type LineType = { lineId: string; text: string };
+export type InsertPayload = { lineId: string; cursor: number; text: string };
+export type InsertData = { method: "INSERT"; payload: InsertPayload };
+
+export type DeletePayload = { lineId: string; cursor: number };
+export type DeleteData = { method: "DELETE"; payload: DeletePayload };
+
+export type BreakPayload = { lineId: string; cursor: number; newLineId: string };
+export type BreakData = { method: "BREAK"; payload: BreakPayload };
+
+export type FoldPayload = { lineId: string };
+export type FoldData = { method: "FOLD"; payload: FoldPayload };
+
+export type EditDataUnion =
+  | InsertData
+  | DeleteData
+  | BreakData
+  | FoldData;
+
+export type EditCommitType = {
+  commitId: string;
+  previousCommitId: string;
+  type: "EDIT";
+  data: EditDataUnion;
+};
 
 export type InitCommitType = {
-  type: "INIT";
-
   commitId: string;
   previousCommitId: null;
-
-  userId: string;
+  type: "INIT";
 };
-type JoinCommitType = {
-  type: "JOIN";
-
-  commitId: string;
-  previousCommitId: string;
-
-  userId: string;
-};
-type EditCommitType = {
-  type: "EDIT";
-
-  commitId: string;
-  previousCommitId: string;
-
-  userId: string;
+export type CommitUnion = InitCommitType | EditCommitType;
+export type LineType = {
+  lineId: string;
+  nextLineId: string | null;
+  text: string;
 };
 
-export type CommitType = (
-  | InitCommitType
-  | JoinCommitType
-  | EditCommitType
-);
 export type DocumentType = {
   id: string;
-  commits: CommitType[];
-  latestCommit: CommitType;
   lines: LineType[];
 };
 
-export type ActualDocument = {
-  documentId: string;
-  latestCommit: CommitType;
+export type ResponseDocument = {
+  id: string;
   lines: LineType[];
 };

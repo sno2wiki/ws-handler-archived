@@ -1,4 +1,4 @@
-import { BreakPayload, FoldPayload, InsertPayload, LineType } from "./types.ts";
+import { BreakPayload, FoldPayload, InsertPayload, LineType } from "../types.ts";
 import { insertText } from "./insert.ts";
 
 export const foldCommit = (lines: LineType[], payload: FoldPayload): LineType[] => {

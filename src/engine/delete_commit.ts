@@ -1,4 +1,4 @@
-import { DeletePayload, LineType } from "./types.ts";
+import { DeletePayload, LineType } from "../types.ts";
 import { deleteText } from "./delete.ts";
 
 export const deleteCommit = (lines: LineType[], payload: DeletePayload): LineType[] => {

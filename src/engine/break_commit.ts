@@ -1,4 +1,4 @@
-import { BreakPayload, InsertPayload, LineType } from "./types.ts";
+import { BreakPayload, InsertPayload, LineType } from "../types.ts";
 import { insertText } from "./insert.ts";
 
 export const breakCommit = (lines: LineType[], payload: BreakPayload): LineType[] => {
