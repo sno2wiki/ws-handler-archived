@@ -1,17 +1,15 @@
 export type LineType = { lineId: string; nextLineId: string; text: string };
-export type DeleteCommitPayload = { lineId: string; cursor: number };
-export type Commit =
-  | InsertCommit
-  | { method: "DELETE"; payload: DeleteCommitPayload };
+export type Commit = InsertCommit | DeleteCommit;
 
 import { InsertCommit, insertCommit } from "./insert.ts";
+import { DeleteCommit, deleteCommit } from "./delete.ts";
 
 export const commitReducer = (lines: LineType[], commit: Commit): LineType[] => {
   switch (commit.method) {
     case "INSERT":
       return insertCommit(lines, commit.payload);
     case "DELETE":
-      return lines;
+      return deleteCommit(lines, commit.payload);
     default:
       return lines;
   }

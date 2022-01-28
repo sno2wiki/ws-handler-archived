@@ -1,7 +1,7 @@
 import { assertEquals, assertThrows } from "std/testing/asserts";
 import { deleteText } from "./delete.ts";
 Deno.test("空文字列に対して1文字削除", () => {
-  const actual = deleteText("", 0,);
+  const actual = deleteText("", 0);
 
   assertEquals(actual, "");
 });
@@ -24,7 +24,6 @@ Deno.test("2文字目を削除", () => {
   assertEquals(actual, "AC");
 });
 
-
 Deno.test("文字列長番目の文字を挿入", () => {
   const actual = deleteText("ABC", 3);
 
@@ -36,4 +35,3 @@ Deno.test("文字列長以上を指定した場合最後の文字を削除", () 
 
   assertEquals(actual, "AB");
 });
-
