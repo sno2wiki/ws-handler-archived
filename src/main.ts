@@ -2,8 +2,8 @@ import { bold, yellow } from "std/fmt/colors";
 import { oakCors } from "cors";
 import { Application, Router } from "oak";
 
-import { findDocument, createDocument, parseDocument } from "./documents/mod.ts";
-import { connect } from "./sockets.ts";
+import { createDocument, findDocument, parseDocument } from "./documents/mod.ts";
+import { addSocket } from "./sockets/mod.ts";
 
 const app = new Application();
 const router = new Router();
@@ -15,7 +15,7 @@ router.get("/docs/:id", async (context) => {
 
   if (!document) {
     context.response.status = 404;
-    return
+    return;
   }
   context.response.body = parseDocument(document);
 });
@@ -36,7 +36,7 @@ router.get("/docs/:id/edit", async (context) => {
   }
 
   const ws = await context.upgrade();
-  connect(documentId, ws);
+  addSocket(documentId, ws);
 });
 
 app.use(oakCors());
