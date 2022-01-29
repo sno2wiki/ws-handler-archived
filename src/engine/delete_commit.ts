@@ -9,7 +9,7 @@ export const deleteCommit = (lines: LineType[], payload: DeletePayload): LineTyp
   return [
     {
       ...lines[index],
-      text: deleteText(lines[index].text, payload.cursor),
+      text: deleteText(lines[index].text, payload.index),
     },
     ...lines.slice(0, index),
     ...lines.slice(index + 1),

@@ -24,8 +24,8 @@ Deno.test("複数のコミットを処理する #1", () => {
       { lineId: "line_2", nextLineId: null, text: "" },
     ],
     [
-      { "method": "INSERT", payload: { lineId: "line_1", cursor: 0, text: "A" } },
-      { "method": "INSERT", payload: { lineId: "line_1", cursor: 1, text: "B" } },
+      { "method": "INSERT", payload: { lineId: "line_1", index: 0, text: "A" } },
+      { "method": "INSERT", payload: { lineId: "line_1", index: 1, text: "B" } },
     ],
   );
   assertEquals(
@@ -44,8 +44,8 @@ Deno.test("複数のコミットを処理する #2", () => {
       { lineId: "line_2", nextLineId: null, text: "" },
     ],
     [
-      { "method": "INSERT", payload: { lineId: "line_2", cursor: 0, text: "A" } },
-      { "method": "INSERT", payload: { lineId: "line_2", cursor: 1, text: "B" } },
+      { "method": "INSERT", payload: { lineId: "line_2", index: 0, text: "A" } },
+      { "method": "INSERT", payload: { lineId: "line_2", index: 1, text: "B" } },
     ],
   );
   assertEquals(
@@ -64,9 +64,9 @@ Deno.test("複数のコミットを処理する #3", () => {
       { lineId: "line_2", nextLineId: null, text: "" },
     ],
     [
-      { "method": "INSERT", payload: { lineId: "line_1", cursor: 0, text: "A" } },
-      { "method": "INSERT", payload: { lineId: "line_2", cursor: 0, text: "A" } },
-      { "method": "INSERT", payload: { lineId: "line_2", cursor: 1, text: "B" } },
+      { "method": "INSERT", payload: { lineId: "line_1", index: 0, text: "A" } },
+      { "method": "INSERT", payload: { lineId: "line_2", index: 0, text: "A" } },
+      { "method": "INSERT", payload: { lineId: "line_2", index: 1, text: "B" } },
     ],
   );
   assertEquals(
@@ -85,8 +85,8 @@ Deno.test("複数のコミットを処理する #4", () => {
       { lineId: "line_2", nextLineId: null, text: "EFGH" },
     ],
     [
-      { "method": "DELETE", payload: { lineId: "line_1", cursor: 3 } },
-      { "method": "DELETE", payload: { lineId: "line_1", cursor: 2 } },
+      { "method": "DELETE", payload: { lineId: "line_1", index: 3 } },
+      { "method": "DELETE", payload: { lineId: "line_1", index: 2 } },
     ],
   );
   assertEquals(
@@ -105,8 +105,8 @@ Deno.test("複数のコミットを処理する #5", () => {
       { lineId: "line_2", nextLineId: null, text: "EFGH" },
     ],
     [
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 3 } },
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 2 } },
+      { "method": "DELETE", payload: { lineId: "line_2", index: 3 } },
+      { "method": "DELETE", payload: { lineId: "line_2", index: 2 } },
     ],
   );
   assertEquals(
@@ -125,9 +125,9 @@ Deno.test("複数のコミットを処理する #6", () => {
       { lineId: "line_2", nextLineId: null, text: "EFGH" },
     ],
     [
-      { "method": "DELETE", payload: { lineId: "line_1", cursor: 3 } },
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 3 } },
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 2 } },
+      { "method": "DELETE", payload: { lineId: "line_1", index: 3 } },
+      { "method": "DELETE", payload: { lineId: "line_2", index: 3 } },
+      { "method": "DELETE", payload: { lineId: "line_2", index: 2 } },
     ],
   );
   assertEquals(
@@ -146,10 +146,10 @@ Deno.test("複数のコミットを処理する #7", () => {
       { lineId: "line_2", nextLineId: null, text: "" },
     ],
     [
-      { "method": "INSERT", payload: { lineId: "line_1", cursor: 0, text: "A" } },
-      { "method": "INSERT", payload: { lineId: "line_1", cursor: 1, text: "B" } },
-      { "method": "DELETE", payload: { lineId: "line_1", cursor: 1 } },
-      { "method": "DELETE", payload: { lineId: "line_1", cursor: 1 } },
+      { "method": "INSERT", payload: { lineId: "line_1", index: 0, text: "A" } },
+      { "method": "INSERT", payload: { lineId: "line_1", index: 1, text: "B" } },
+      { "method": "DELETE", payload: { lineId: "line_1", index: 1 } },
+      { "method": "DELETE", payload: { lineId: "line_1", index: 1 } },
     ],
   );
   assertEquals(
@@ -168,11 +168,11 @@ Deno.test("複数のコミットを処理する #8", () => {
       { lineId: "line_2", nextLineId: null, text: "" },
     ],
     [
-      { "method": "INSERT", payload: { lineId: "line_1", cursor: 0, text: "A" } },
-      { "method": "INSERT", payload: { lineId: "line_1", cursor: 1, text: "B" } },
-      { "method": "INSERT", payload: { lineId: "line_1", cursor: 2, text: "C" } },
-      { "method": "INSERT", payload: { lineId: "line_1", cursor: 3, text: "D" } },
-      { "method": "BREAK", payload: { lineId: "line_1", cursor: 2, newLineId: "newline" } },
+      { "method": "INSERT", payload: { lineId: "line_1", index: 0, text: "A" } },
+      { "method": "INSERT", payload: { lineId: "line_1", index: 1, text: "B" } },
+      { "method": "INSERT", payload: { lineId: "line_1", index: 2, text: "C" } },
+      { "method": "INSERT", payload: { lineId: "line_1", index: 3, text: "D" } },
+      { "method": "BREAK", payload: { lineId: "line_1", index: 2, newLineId: "newline" } },
     ],
   );
   assertEquals(
@@ -192,10 +192,10 @@ Deno.test("複数のコミットを処理する #9", () => {
       { lineId: "line_2", nextLineId: null, text: "EFGH" },
     ],
     [
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 4 } },
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 3 } },
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 2 } },
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 1 } },
+      { "method": "DELETE", payload: { lineId: "line_2", index: 4 } },
+      { "method": "DELETE", payload: { lineId: "line_2", index: 3 } },
+      { "method": "DELETE", payload: { lineId: "line_2", index: 2 } },
+      { "method": "DELETE", payload: { lineId: "line_2", index: 1 } },
       { "method": "FOLD", payload: { lineId: "line_2" } },
     ],
   );
@@ -214,8 +214,8 @@ Deno.test("複数のコミットを処理する #10", () => {
       { lineId: "line_2", nextLineId: null, text: "EFGH" },
     ],
     [
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 2 } },
-      { "method": "DELETE", payload: { lineId: "line_2", cursor: 1 } },
+      { "method": "DELETE", payload: { lineId: "line_2", index: 2 } },
+      { "method": "DELETE", payload: { lineId: "line_2", index: 1 } },
       { "method": "FOLD", payload: { lineId: "line_2" } },
     ],
   );

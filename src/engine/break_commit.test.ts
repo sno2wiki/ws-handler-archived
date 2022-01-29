@@ -7,7 +7,7 @@ Deno.test("breakCommit #1", () => {
       { lineId: "line_1", nextLineId: "line_2", text: "ABCD" },
       { lineId: "line_2", nextLineId: null, text: "EFGI" },
     ],
-    { lineId: "line_1", cursor: 4, newLineId: "newline" },
+    { lineId: "line_1", index: 4, newLineId: "newline" },
   );
   assertEquals(
     actual,
@@ -25,7 +25,7 @@ Deno.test("breakCommit #2", () => {
       { lineId: "line_1", nextLineId: "line_2", text: "ABCD" },
       { lineId: "line_2", nextLineId: null, text: "EFGI" },
     ],
-    { lineId: "line_2", cursor: 4, newLineId: "newline" },
+    { lineId: "line_2", index: 4, newLineId: "newline" },
   );
   assertEquals(
     actual,
@@ -43,7 +43,7 @@ Deno.test("breakCommit #3", () => {
       { lineId: "line_1", nextLineId: "line_2", text: "ABCD" },
       { lineId: "line_2", nextLineId: null, text: "EFGI" },
     ],
-    { lineId: "line_1", cursor: 2, newLineId: "newline" },
+    { lineId: "line_1", index: 2, newLineId: "newline" },
   );
   assertEquals(
     actual,

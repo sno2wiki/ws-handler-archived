@@ -10,12 +10,12 @@ export const breakCommit = (lines: LineType[], payload: BreakPayload): LineType[
     {
       lineId: lines[index].lineId,
       nextLineId: payload.newLineId,
-      text: lines[index].text.slice(0, payload.cursor),
+      text: lines[index].text.slice(0, payload.index),
     },
     {
       lineId: payload.newLineId,
       nextLineId: lines[index].nextLineId,
-      text: lines[index].text.slice(payload.cursor),
+      text: lines[index].text.slice(payload.index),
     },
     ...lines.slice(0, index),
     ...lines.slice(index + 1),

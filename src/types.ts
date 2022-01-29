@@ -1,10 +1,10 @@
-export type InsertPayload = { lineId: string; cursor: number; text: string };
+export type InsertPayload = { lineId: string; index: number; text: string };
 export type InsertData = { method: "INSERT"; payload: InsertPayload };
 
-export type DeletePayload = { lineId: string; cursor: number };
+export type DeletePayload = { lineId: string; index: number };
 export type DeleteData = { method: "DELETE"; payload: DeletePayload };
 
-export type BreakPayload = { lineId: string; cursor: number; newLineId: string };
+export type BreakPayload = { lineId: string; index: number; newLineId: string };
 export type BreakData = { method: "BREAK"; payload: BreakPayload };
 
 export type FoldPayload = { lineId: string };
@@ -42,7 +42,11 @@ export type DocumentType = {
   latestCommitId: CommitUnion["commitId"];
 };
 
-export type ResponseDocumentLine = { lineId: string; text: string };
+export type ResponseDocumentLine = {
+  lineId: string;
+  nextLineId: string | null;
+  text: string;
+};
 export type ResponseDocument = {
   id: string;
   lines: ResponseDocumentLine[];

@@ -7,7 +7,7 @@ Deno.test("insertCommit #1", () => {
       { lineId: "line_1", nextLineId: "line_2", text: "" },
       { lineId: "line_2", nextLineId: null, text: "" },
     ],
-    { lineId: "line_1", cursor: 0, text: "A" },
+    { lineId: "line_1", index: 0, text: "A" },
   );
   assertEquals(
     actual,
@@ -24,7 +24,7 @@ Deno.test("insertCommit #2", () => {
       { lineId: "line_1", nextLineId: "line_2", text: "" },
       { lineId: "line_2", nextLineId: null, text: "" },
     ],
-    { lineId: "line_2", cursor: 0, text: "A" },
+    { lineId: "line_2", index: 0, text: "A" },
   );
   assertEquals(
     actual,

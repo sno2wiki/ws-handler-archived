@@ -9,7 +9,7 @@ export const insertCommit = (lines: LineType[], payload: InsertPayload): LineTyp
   return [
     {
       ...lines[index],
-      text: insertText(lines[index].text, payload.cursor, payload.text),
+      text: insertText(lines[index].text, payload.index, payload.text),
     },
     ...lines.slice(0, index),
     ...lines.slice(index + 1),
