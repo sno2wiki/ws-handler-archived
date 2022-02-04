@@ -1,6 +1,6 @@
-import { Line, LinesMap } from "./types.ts";
+import { LinesMap, StorageLine } from "./types.ts";
 
-export const buildLinesMap = (lines: Line[]): LinesMap => {
+export const buildLinesMap = (lines: StorageLine[]): LinesMap => {
   const map: LinesMap = new Map();
   lines.forEach(({ id, ...rest }, i) =>
     map.set(id, {

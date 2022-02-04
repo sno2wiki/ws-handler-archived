@@ -2,13 +2,14 @@ import { bold, yellow } from "std/fmt/colors";
 import { oakCors } from "cors";
 import { Application, Router } from "oak";
 
-import { createDocument, findDocument, parseDocument } from "./documents/mod.ts";
+import { findDocument, parseDocument } from "./documents/mod.ts";
+import { createEmptyDocument } from "./documents_2/mod.ts";
 import { addSocket } from "./sockets/mod.ts";
 
 const app = new Application();
 const router = new Router();
 
-createDocument("eKfn8xhyQg68Pe1E", "01FTD78WNZ2NGCWNTPN59YDKEM");
+createEmptyDocument("eKfn8xhyQg68Pe1E", "01FTD78WNZ2NGCWNTPN59YDKEM");
 router.get("/docs/:id", async (context) => {
   const documentId = context.params["id"];
   const document = await findDocument(documentId);
@@ -23,7 +24,7 @@ router.get("/docs/:id", async (context) => {
 router.post("/docs/:id/create", async (context) => {
   const documentId = context.params["id"];
 
-  const newDocument = await createDocument(documentId, "01FTD78WNZ2NGCWNTPN59YDKEM");
+  const newDocument = await createEmptyDocument(documentId, "01FTD78WNZ2NGCWNTPN59YDKEM");
   context.response.body = newDocument;
 });
 
