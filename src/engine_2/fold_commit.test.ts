@@ -11,7 +11,7 @@ Deno.test("foldCommit #1", () => {
     { lineId: "line_2" },
   );
   assertEquals(
-    actual.lines,
+    actual,
     new Map([
       ["line_1", { prevLineId: null, postLineId: "line_3", text: "ABCDEFGH" }],
       ["line_3", { prevLineId: "line_1", postLineId: null, text: "IJKL" }],
@@ -29,7 +29,7 @@ Deno.test("foldCommit #2", () => {
     { lineId: "line_3" },
   );
   assertEquals(
-    actual.lines,
+    actual,
     new Map([
       ["line_1", { prevLineId: null, postLineId: "line_2", text: "ABCD" }],
       ["line_2", { prevLineId: "line_1", postLineId: null, text: "EFGHIJKL" }],
@@ -46,7 +46,7 @@ Deno.test("foldCommit #3", () => {
     { lineId: "line_2" },
   );
   assertEquals(
-    actual.lines,
+    actual,
     new Map([
       ["line_1", { prevLineId: null, postLineId: null, text: "ABCDEFGH" }],
     ]),

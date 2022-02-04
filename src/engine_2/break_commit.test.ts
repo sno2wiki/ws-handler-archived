@@ -9,9 +9,8 @@ Deno.test("breakCommit #1", () => {
     ]),
     { lineId: "line_1", index: 4, newLineId: "newline" },
   );
-  assertEquals(actual.result, "ok");
   assertEquals(
-    actual.lines,
+    actual,
     new Map([
       ["line_1", { prevLineId: null, postLineId: "newline", text: "ABCD" }],
       ["newline", { prevLineId: "line_1", postLineId: "line_2", text: "" }],
@@ -28,9 +27,8 @@ Deno.test("breakCommit #2", () => {
     ]),
     { lineId: "line_2", index: 4, newLineId: "newline" },
   );
-  assertEquals(actual.result, "ok");
   assertEquals(
-    actual.lines,
+    actual,
     new Map([
       ["line_1", { prevLineId: null, postLineId: "line_2", text: "ABCD" }],
       ["line_2", { prevLineId: "line_1", postLineId: "newline", text: "EFGH" }],
@@ -47,9 +45,8 @@ Deno.test("breakCommit #3", () => {
     ]),
     { lineId: "line_1", index: 2, newLineId: "newline" },
   );
-  assertEquals(actual.result, "ok");
   assertEquals(
-    actual.lines,
+    actual,
     new Map([
       ["line_1", { prevLineId: null, postLineId: "newline", text: "AB" }],
       ["newline", { prevLineId: "line_1", postLineId: "line_2", text: "CD" }],

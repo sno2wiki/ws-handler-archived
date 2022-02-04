@@ -10,7 +10,7 @@ Deno.test("deleteCommit #1", () => {
     { lineId: "line_1", index: 4 },
   );
   assertEquals(
-    actual.lines,
+    actual,
     new Map([
       ["line_1", { prevLineId: null, postLineId: "line_2", text: "ABC" }],
       ["line_2", { prevLineId: "line_1", postLineId: null, text: "" }],
