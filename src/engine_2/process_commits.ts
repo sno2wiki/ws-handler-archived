@@ -2,28 +2,12 @@ import { insertCommit, InsertCommitError, InsertPayload } from "./insert_commit.
 import { deleteCommit, DeleteCommitError, DeletePayload } from "./delete_commit.ts";
 import { breakCommit, BreakCommitError, BreakPayload } from "./break_commit.ts";
 import { foldCommit, FoldCommitError, FoldPayload } from "./fold_commit.ts";
-import { LinesMap } from "./types.ts";
-
-type HappenedError = {
-  commitId: string;
-  data:
-    | { type: "INSERT"; message: string }
-    | { type: "DELETE"; message: string }
-    | { type: "BREAK"; message: string }
-    | { type: "FOLD"; message: string };
-};
+import { EditCommit, HappenedError, LinesMap } from "./types.ts";
 
 export const processCommits = (
   initLines: LinesMap,
   initCommitId: string,
-  commits: {
-    commitId: string;
-    data:
-      | { method: "INSERT"; payload: InsertPayload }
-      | { method: "DELETE"; payload: DeletePayload }
-      | { method: "BREAK"; payload: BreakPayload }
-      | { method: "FOLD"; payload: FoldPayload };
-  }[],
+  commits: EditCommit[],
 ): {
   lines: LinesMap;
   headCommitId: string;
