@@ -2,8 +2,7 @@ import { bold, yellow } from "std/fmt/colors";
 import { oakCors } from "cors";
 import { Application, Router } from "oak";
 
-import { findDocument, parseDocument } from "./documents/mod.ts";
-import { createEmptyDocument } from "./documents_2/mod.ts";
+import { createEmptyDocument, findDocument } from "./documents_2/mod.ts";
 import { addSocket } from "./sockets/mod.ts";
 
 const app = new Application();
@@ -18,7 +17,7 @@ router.get("/docs/:id", async (context) => {
     context.response.status = 404;
     return;
   }
-  context.response.body = parseDocument(document);
+  context.response.body = document;
 });
 
 router.post("/docs/:id/create", async (context) => {

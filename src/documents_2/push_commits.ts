@@ -1,5 +1,5 @@
 import { DocumentContent, EditCommit, HappenedError } from "./types.ts";
-import { fetchCache, storeCache } from "./cache.ts";
+import { fetchCache, storeCache } from "./cache/mod.ts";
 import { updateDocument } from "../engine_2/mod.ts";
 export const pushCommits = async (
   documentId: string,
