@@ -3,36 +3,52 @@ import { assertEquals } from "std/testing/asserts";
 
 Deno.test("foldCommit #1", () => {
   const actual = foldCommit(
-    [
-      { lineId: "line_1", nextLineId: "line_2", text: "ABCD" },
-      { lineId: "line_2", nextLineId: "line_3", text: "EFGI" },
-      { lineId: "line_3", nextLineId: null, text: "JKLM" },
-    ],
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: "line_2", text: "ABCD" }],
+      ["line_2", { prevLineId: "line_1", postLineId: "line_3", text: "EFGH" }],
+      ["line_3", { prevLineId: "line_2", postLineId: null, text: "IJKL" }],
+    ]),
     { lineId: "line_2" },
   );
   assertEquals(
     actual,
-    [
-      { lineId: "line_1", nextLineId: "line_3", text: "ABCDEFGI" },
-      { lineId: "line_3", nextLineId: null, text: "JKLM" },
-    ],
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: "line_3", text: "ABCDEFGH" }],
+      ["line_3", { prevLineId: "line_1", postLineId: null, text: "IJKL" }],
+    ]),
   );
 });
 
 Deno.test("foldCommit #2", () => {
   const actual = foldCommit(
-    [
-      { lineId: "line_1", nextLineId: "line_2", text: "ABCD" },
-      { lineId: "line_2", nextLineId: "line_3", text: "EFGI" },
-      { lineId: "line_3", nextLineId: null, text: "JKLM" },
-    ],
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: "line_2", text: "ABCD" }],
+      ["line_2", { prevLineId: "line_1", postLineId: "line_3", text: "EFGH" }],
+      ["line_3", { prevLineId: "line_2", postLineId: null, text: "IJKL" }],
+    ]),
     { lineId: "line_3" },
   );
   assertEquals(
     actual,
-    [
-      { lineId: "line_2", nextLineId: null, text: "EFGIJKLM" },
-      { lineId: "line_1", nextLineId: "line_2", text: "ABCD" },
-    ],
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: "line_2", text: "ABCD" }],
+      ["line_2", { prevLineId: "line_1", postLineId: null, text: "EFGHIJKL" }],
+    ]),
+  );
+});
+
+Deno.test("foldCommit #3", () => {
+  const actual = foldCommit(
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: "line_2", text: "ABCD" }],
+      ["line_2", { prevLineId: "line_1", postLineId: null, text: "EFGH" }],
+    ]),
+    { lineId: "line_2" },
+  );
+  assertEquals(
+    actual,
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: null, text: "ABCDEFGH" }],
+    ]),
   );
 });

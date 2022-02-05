@@ -2,7 +2,7 @@ import { bold, yellow } from "std/fmt/colors";
 import { oakCors } from "cors";
 import { Application, Router } from "oak";
 
-import { createEmptyDocument, findDocument } from "./documents_2/mod.ts";
+import { createEmptyDocument, findDocument } from "./documents/mod.ts";
 import { addSocket } from "./sockets/mod.ts";
 
 const app = new Application();

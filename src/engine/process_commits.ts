@@ -1,27 +1,53 @@
-import { insertCommit } from "./insert_commit.ts";
-import { deleteCommit } from "./delete_commit.ts";
-import { breakCommit } from "./break_commit.ts";
-import { foldCommit } from "./fold_commit.ts";
-import { EditDataUnion, LineType } from "../types.ts";
+import { insertCommit, InsertCommitError, InsertPayload } from "./insert_commit.ts";
+import { deleteCommit, DeleteCommitError, DeletePayload } from "./delete_commit.ts";
+import { breakCommit, BreakCommitError, BreakPayload } from "./break_commit.ts";
+import { foldCommit, FoldCommitError, FoldPayload } from "./fold_commit.ts";
+import { EditCommit, HappenedError, LinesMap } from "./types.ts";
 
-export const processCommits = (lines: LineType[], commits: EditDataUnion[]): LineType[] => {
-  for (const commit of commits) {
-    switch (commit.method) {
-      case "INSERT":
-        lines = insertCommit(lines, commit.payload);
+export const processCommits = (
+  initLines: LinesMap,
+  initCommitId: string,
+  commits: EditCommit[],
+): {
+  lines: LinesMap;
+  headCommitId: string;
+  error?: HappenedError;
+} => {
+  let lines = initLines;
+  let headCommitId = initCommitId;
+  let error: HappenedError | null = null;
+  for (const { commitId, data } of commits) {
+    try {
+      switch (data.method) {
+        case "INSERT":
+          lines = insertCommit(lines, data.payload);
+          break;
+        case "DELETE":
+          lines = deleteCommit(lines, data.payload);
+          break;
+        case "BREAK":
+          lines = breakCommit(lines, data.payload);
+          break;
+        case "FOLD":
+          lines = foldCommit(lines, data.payload);
+          break;
+      }
+      headCommitId = commitId;
+    } catch (e) {
+      if (e instanceof InsertCommitError) {
+        error = { commitId, data: { type: "INSERT", message: e.message } };
         break;
-      case "DELETE":
-        lines = deleteCommit(lines, commit.payload);
+      } else if (e instanceof DeleteCommitError) {
+        error = { commitId, data: { type: "BREAK", message: e.message } };
         break;
-      case "BREAK":
-        lines = breakCommit(lines, commit.payload);
+      } else if (e instanceof BreakCommitError) {
+        error = { commitId, data: { type: "BREAK", message: e.message } };
         break;
-      case "FOLD":
-        lines = foldCommit(lines, commit.payload);
+      } else if (e instanceof FoldCommitError) {
+        error = { commitId, data: { type: "FOLD", message: e.message } };
         break;
-      default:
-        break;
+      }
     }
   }
-  return lines;
+  return error ? { lines, headCommitId, error: error } : { lines, headCommitId };
 };

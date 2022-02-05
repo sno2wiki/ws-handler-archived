@@ -3,34 +3,17 @@ import { assertEquals } from "std/testing/asserts";
 
 Deno.test("deleteCommit #1", () => {
   const actual = deleteCommit(
-    [
-      { lineId: "line_1", nextLineId: "line_2", text: "ABCD" },
-      { lineId: "line_2", nextLineId: null, text: "" },
-    ],
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: "line_2", text: "ABCD" }],
+      ["line_2", { prevLineId: "line_1", postLineId: null, text: "" }],
+    ]),
     { lineId: "line_1", index: 4 },
   );
   assertEquals(
     actual,
-    [
-      { lineId: "line_1", nextLineId: "line_2", text: "ABC" },
-      { lineId: "line_2", nextLineId: null, text: "" },
-    ],
-  );
-});
-
-Deno.test("deleteCommit #2", () => {
-  const actual = deleteCommit(
-    [
-      { lineId: "line_1", nextLineId: "line_2", text: "" },
-      { lineId: "line_2", nextLineId: null, text: "ABCD" },
-    ],
-    { lineId: "line_2", index: 4 },
-  );
-  assertEquals(
-    actual,
-    [
-      { lineId: "line_2", nextLineId: null, text: "ABC" },
-      { lineId: "line_1", nextLineId: "line_2", text: "" },
-    ],
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: "line_2", text: "ABC" }],
+      ["line_2", { prevLineId: "line_1", postLineId: null, text: "" }],
+    ]),
   );
 });

@@ -6,7 +6,8 @@ export const createEmptyDocument = async (documentId: string, createdBy: string)
   const newDocument: StorageDocument = {
     headCommitId: createCommitId(),
     lines: [
-      { id: createLineId(), text: "TEXT" },
+      { id: createLineId(), text: "TEXT1" },
+      { id: createLineId(), text: "TEXT2" },
     ],
   };
   await storeDocument(documentId, newDocument);

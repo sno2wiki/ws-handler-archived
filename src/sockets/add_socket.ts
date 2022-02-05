@@ -1,5 +1,5 @@
 import { getSockets } from "./get_sockets.ts";
-import { fetchCache, pushCommits, releaseCache, simplifyContent } from "../documents_2/mod.ts";
+import { fetchCache, pushCommits, releaseCache, simplifyContent } from "../documents/mod.ts";
 import { logger } from "../logger/mod.ts";
 
 export const addSocket = (documentId: string, ws: WebSocket) => {

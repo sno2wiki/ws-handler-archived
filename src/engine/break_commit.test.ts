@@ -3,54 +3,54 @@ import { assertEquals } from "std/testing/asserts";
 
 Deno.test("breakCommit #1", () => {
   const actual = breakCommit(
-    [
-      { lineId: "line_1", nextLineId: "line_2", text: "ABCD" },
-      { lineId: "line_2", nextLineId: null, text: "EFGI" },
-    ],
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: "line_2", text: "ABCD" }],
+      ["line_2", { prevLineId: "line_1", postLineId: null, text: "EFGH" }],
+    ]),
     { lineId: "line_1", index: 4, newLineId: "newline" },
   );
   assertEquals(
     actual,
-    [
-      { lineId: "line_1", nextLineId: "newline", text: "ABCD" },
-      { lineId: "newline", nextLineId: "line_2", text: "" },
-      { lineId: "line_2", nextLineId: null, text: "EFGI" },
-    ],
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: "newline", text: "ABCD" }],
+      ["newline", { prevLineId: "line_1", postLineId: "line_2", text: "" }],
+      ["line_2", { prevLineId: "newline", postLineId: null, text: "EFGH" }],
+    ]),
   );
 });
 
 Deno.test("breakCommit #2", () => {
   const actual = breakCommit(
-    [
-      { lineId: "line_1", nextLineId: "line_2", text: "ABCD" },
-      { lineId: "line_2", nextLineId: null, text: "EFGI" },
-    ],
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: "line_2", text: "ABCD" }],
+      ["line_2", { prevLineId: "line_1", postLineId: null, text: "EFGH" }],
+    ]),
     { lineId: "line_2", index: 4, newLineId: "newline" },
   );
   assertEquals(
     actual,
-    [
-      { lineId: "line_2", nextLineId: "newline", text: "EFGI" },
-      { lineId: "newline", nextLineId: null, text: "" },
-      { lineId: "line_1", nextLineId: "line_2", text: "ABCD" },
-    ],
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: "line_2", text: "ABCD" }],
+      ["line_2", { prevLineId: "line_1", postLineId: "newline", text: "EFGH" }],
+      ["newline", { prevLineId: "line_2", postLineId: null, text: "" }],
+    ]),
   );
 });
 
 Deno.test("breakCommit #3", () => {
   const actual = breakCommit(
-    [
-      { lineId: "line_1", nextLineId: "line_2", text: "ABCD" },
-      { lineId: "line_2", nextLineId: null, text: "EFGI" },
-    ],
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: "line_2", text: "ABCD" }],
+      ["line_2", { prevLineId: "line_1", postLineId: null, text: "EFGH" }],
+    ]),
     { lineId: "line_1", index: 2, newLineId: "newline" },
   );
   assertEquals(
     actual,
-    [
-      { lineId: "line_1", nextLineId: "newline", text: "AB" },
-      { lineId: "newline", nextLineId: "line_2", text: "CD" },
-      { lineId: "line_2", nextLineId: null, text: "EFGI" },
-    ],
+    new Map([
+      ["line_1", { prevLineId: null, postLineId: "newline", text: "AB" }],
+      ["newline", { prevLineId: "line_1", postLineId: "line_2", text: "CD" }],
+      ["line_2", { prevLineId: "newline", postLineId: null, text: "EFGH" }],
+    ]),
   );
 });
