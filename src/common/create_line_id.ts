@@ -1,3 +1,7 @@
-import { nanoid } from "nanoid";
+import { customAlphabet } from "nanoid";
 
-export const createLineId = () => nanoid(16);
+export const createLineId = () =>
+  customAlphabet(
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz",
+    16,
+  )();
