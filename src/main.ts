@@ -3,7 +3,7 @@ import { oakCors } from "cors";
 import { Application, Router } from "oak";
 
 import { createEmptyDocument, findDocument } from "./documents/mod.ts";
-import { addSocket } from "./sockets/mod.ts";
+import { getRoom } from "./rooms/mod.ts";
 
 const app = new Application();
 const router = new Router();
@@ -36,7 +36,7 @@ router.get("/docs/:id/edit", async (context) => {
   }
 
   const ws = await context.upgrade();
-  addSocket(documentId, ws);
+  getRoom(documentId).addSocket(ws);
 });
 
 app.use(oakCors());
